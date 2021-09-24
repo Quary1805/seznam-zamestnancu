@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seznam Zaměstnanců</title>
+    <link rel="icon" href="img/group.png">
+
+    <!-- Google font, který mám rád :D -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Farro&display=swap" rel="stylesheet">
+
+    <!-- Moje skripty a styly -->
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body onload="Init()">
+    <!-- Kontrolní panel, např. na přidání zaměstnance -->
+    <div id="control_panel" hidden>
+        Filtr:<br>
+        <input type="text" id="search_text" onchange="RenderList()"><br>
+        <hr>
+        <button onclick="PopUps.AddEmployee();"><img src="img/user_add.png" alt="X" class="icon"> Přidat Zaměstnance</button><br>
+        <button onclick="PopUps.GenerateEmployees();"><img src="img/computer.png" alt="X" class="icon"> Vygenerovat Zaměstnance</button><br>
+        <button onclick="PopUps.ClearTable()"><img src="img/database_delete.png" alt="X" class="icon"> Vyčistit tabulku</button>
+    </div>
+    
+    <!-- Hlavní tabulka se zaměstnanci -->
+    <div id="main_table_container">
+        <i><p id="table_info">Aplikace se načítá...</p></i>
+        <table id="main_table">
+
+        </table>
+    </div>
+
+    <!-- Panel pro zobrazení a úpravu zaměstnanců -->
+    <div id="worker_panel">
+        <span id="worpan_0" hidden>
+            <i>Vyberte zaměstnance</i>
+        </span>
+        <div id="worpan_1" hidden>
+            Jméno a Příjmení
+            <h2 id="worpan_name"></h2>
+            <hr>
+            Pozice
+            <h3 id="worpan_position"></h3>
+            <hr>
+            Datum Narození
+            <h3 id="worpan_date_of_birth"></h3>
+            <hr>
+            <button onclick="PopUps.EditEmployee()"><img src="img/user_edit.png" alt="X" class="icon"> Upravit Zaměstnance</button><br>
+            <button onclick="PopUps.RemoveEmployee()"><img src="img/user_delete.png" alt="X" class="icon"> Smazat Zaměstnance</button>
+        </div>
+    </div>
+
+    <!-- Vyskakovací okno pro přidání zaměstnance -->
+    <div class="popup" id="addemp" hidden>
+        Jméno: 
+        <input type="text" id="addemp_first_name" placeholder="Jan"><br>
+        Příjmení: 
+        <input type="text" id="addemp_last_name" placeholder="Novák"><br>
+        Pozice: 
+        <select id="addemp_position"><option value="1">1</option></select><br>
+        Datum Narození: 
+        <select id="addemp_day"><option value="1">1</option></select>. <select id="addemp_month"><option value="1">1</option></select>. <select id="addemp_year"><option value="1">1</option></select>
+        <hr>
+        <button onclick="AddEmployeeFromDialog()"><img src="img/tick.png" alt="X" class="icon"> Přidat</button>
+        <button onclick="PopUps._Clear()"><img src="img/cross.png" alt="X" class="icon"> Zrušit</button>
+    </div>
+
+    <!-- Vyskakovací okno pro úpravu zaměstnance -->
+    <div class="popup" id="ediemp" hidden>
+        Jméno: 
+        <input type="text" id="ediemp_first_name" placeholder="Jan"><br>
+        Příjmení: 
+        <input type="text" id="ediemp_last_name" placeholder="Novák"><br>
+        Pozice: 
+        <select id="ediemp_position"><option value="1">1</option></select><br>
+        <hr>
+        <button onclick="EditEmployee()"><img src="img/disk.png" alt="X" class="icon"> Uložit Změny</button>
+        <button onclick="PopUps._Clear()"><img src="img/arrow_undo.png" alt="X" class="icon"> Vrátit Změny</button>
+    </div>
+
+    <!-- Vyskakovací okno pro zadání počtu vygenerovaných zaměstnanců (Debug) -->
+    <div class="popup" id="genemp" hidden>
+        Zadejte počet<br>
+        <input type="number" id="genemp_input" value="100" step="1" size="4" maxlength="4" max="9999" min="0">
+        <hr>
+        <button onclick="GenerateEmployees(parseInt(document.getElementById('genemp_input').value));"><img src="img/tick.png" alt="X" class="icon"> Vygenerovat</button>
+        <button onclick="PopUps._Clear()"><img src="img/cross.png" alt="X" class="icon"> Zrušit</button>
+    </div>
+
+    <!-- Vyskakovací okno pro smazání zaměstnance -->
+    <div class="popup" id="rememp" hidden>
+        Jste si jistí?<br>
+        <hr>
+        <button onclick="RemoveEmployee()"><img src="img/tick.png" alt="X" class="icon"> Ano</button>
+        <button onclick="PopUps._Clear()"><img src="img/cross.png" alt="X" class="icon"> Ne</button>
+    </div>
+
+    <!-- Vyskakovací okno pro potvrzení smazání tabulky -->
+    <div class="popup" id="cletab" hidden>
+        Jste si jistí?<br>
+        <hr>
+        <button onclick="ClearTable()"><img src="img/tick.png" alt="X" class="icon"> Ano</button>
+        <button onclick="PopUps._Clear()"><img src="img/cross.png" alt="X" class="icon"> Ne</button>
+    </div>
+</body>
+</html>
